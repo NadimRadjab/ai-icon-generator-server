@@ -1,0 +1,22 @@
+node_modules
+
+# Ignore compiled JavaScript files
+/dist
+
+# Ignore TypeScript build artifacts
+*.tsbuildinfo
+
+# Ignore editor-specific files
+.vscode/
+.idea/
+
+# Ignore environment-specific files
+.env
+.env.*
+
+# Ignore log files
+*.log
+
+# Ignore operating system files
+.DS_Store
+Thumbs.db
