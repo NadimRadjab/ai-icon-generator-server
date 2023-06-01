@@ -37,3 +37,28 @@ export const generateImage = async (req: Request, res: Response) => {
     }
   }
 };
+
+export const generateText = async (req: Request, res: Response) => {
+  try {
+    const reponse = await openai.createChatCompletion({
+      model: "gpt-3.5-turbo",
+      messages: req.body,
+    });
+    const chatGPTMessage = reponse.data.choices[0].message;
+    res.status(200).json({
+      success: true,
+      text: chatGPTMessage,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      error: "The message could not be generated.",
+    });
+    if (error.response) {
+      console.log(error.response.status);
+      console.log(error.response.data);
+    } else {
+      console.log(error.message);
+    }
+  }
+};
