@@ -10,12 +10,13 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 export const generateImage = async (req: Request, res: Response) => {
-  const { prompt, size } = req.body;
+  const { prompt, size, iconStyle, color, iconShape } = req.body;
   const imageSize =
     size === "small" ? "256x256" : size === "medium" ? "512x512" : "1024x1024";
+  const finalPrompt = `a modern ${iconShape} icon in ${color} of a ${prompt}, ${iconStyle}, high quality, trending on art station, unreal engine graphics quality`;
   try {
     const reponse = await openai.createImage({
-      prompt,
+      prompt: finalPrompt,
       n: 1,
       size: imageSize,
     });
