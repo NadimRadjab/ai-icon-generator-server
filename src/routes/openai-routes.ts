@@ -1,8 +1,13 @@
-import express, { Request, Response } from "express";
-import { generateImage, generateText } from "../controllers/openai-controller";
+import express from "express";
+import {
+  generateIcon,
+  generateImage,
+  generateText,
+} from "../controllers/openai-controller";
 const router = express.Router();
 
 router.post("/generate-chat", generateText);
-router.post("/generate-icon", generateImage);
+router.post("/generate-icon", generateIcon);
+router.post("/generate-image", generateImage);
 
 export default router;

@@ -9,7 +9,7 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-export const generateImage = async (req: Request, res: Response) => {
+export const generateIcon = async (req: Request, res: Response) => {
   const { prompt, size, iconStyle, color, iconShape } = req.body;
   const imageSize =
     size === "small" ? "256x256" : size === "medium" ? "512x512" : "1024x1024";
@@ -24,6 +24,34 @@ export const generateImage = async (req: Request, res: Response) => {
     res.status(200).json({
       success: true,
       data: imageUrl,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      error: "The image could not be generated.",
+    });
+    if (error.response) {
+      console.log(error.response.status);
+      console.log(error.response.data);
+    } else {
+      console.log(error.message);
+    }
+  }
+};
+export const generateImage = async (req: Request, res: Response) => {
+  const { prompt, imageStyle } = req.body;
+
+  const finalPrompt = `an image of a ${prompt}, in ${imageStyle} style, high quality, trending on art station, unreal engine graphics quality`;
+  try {
+    const reponse = await openai.createImage({
+      prompt: finalPrompt,
+      n: 1,
+      size: "1024x1024",
+    });
+    const imageUrl = reponse.data.data[0].url;
+    res.status(200).json({
+      success: true,
+      imageUrl,
     });
   } catch (error) {
     res.status(400).json({
