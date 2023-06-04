@@ -3,7 +3,7 @@ import {
   generateIcon,
   generateImage,
   generateText,
-} from "../controllers/openai-controller";
+} from "../controllers/openai-controller.js";
 const router = express.Router();
 
 router.post("/generate-chat", generateText);
