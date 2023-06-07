@@ -26,10 +26,24 @@ export const generateIcon = async (req: Request, res: Response) => {
       data: imageUrl,
     });
   } catch (error) {
-    res.status(400).json({
-      success: false,
-      error: "The image could not be generated.",
-    });
+    if (error.response) {
+    }
+    if (
+      error?.response?.data?.error?.message ===
+      "Your request was rejected as a result of our safety system. Your prompt may contain text that is not allowed by our safety system."
+    ) {
+      res.status(400).json({
+        success: false,
+        message:
+          "Your prompt may contain text that is not allowed by our safety system.",
+      });
+    } else {
+      res.status(400).json({
+        success: false,
+        message: "An error has occurred, please try again later.",
+      });
+    }
+
     if (error.response) {
       console.log(error.response.status);
       console.log(error.response.data);
@@ -54,10 +68,22 @@ export const generateImage = async (req: Request, res: Response) => {
       imageUrl,
     });
   } catch (error) {
-    res.status(400).json({
-      success: false,
-      error: "The image could not be generated.",
-    });
+    if (
+      error?.response?.data?.error?.message ===
+      "Your request was rejected as a result of our safety system. Your prompt may contain text that is not allowed by our safety system."
+    ) {
+      res.status(400).json({
+        success: false,
+        message:
+          "Your prompt may contain text that is not allowed by our safety system.",
+      });
+    } else {
+      res.status(400).json({
+        success: false,
+        message: "An error has occurred, please try again later.",
+      });
+    }
+
     if (error.response) {
       console.log(error.response.status);
       console.log(error.response.data);
