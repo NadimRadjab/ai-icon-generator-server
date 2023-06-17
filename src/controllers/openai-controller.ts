@@ -55,7 +55,10 @@ export const generateIcon = async (req: Request, res: Response) => {
 export const generateImage = async (req: Request, res: Response) => {
   const { prompt, imageStyle } = req.body;
 
-  const finalPrompt = `an image of a ${prompt}, in ${imageStyle} style, high quality, trending on art station, unreal engine graphics quality`;
+  const finalPrompt =
+    imageStyle === "styless"
+      ? prompt
+      : `an image of a ${prompt}, in ${imageStyle} style, high quality, trending on art station, unreal engine graphics quality`;
   try {
     const reponse = await openai.createImage({
       prompt: finalPrompt,
